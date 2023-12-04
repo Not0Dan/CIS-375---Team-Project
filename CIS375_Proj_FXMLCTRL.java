@@ -17,36 +17,73 @@ import javafx.scene.control.Label;
 public class CIS375_Proj_FXMLCTRL implements Initializable {
 
     @FXML
-    private Label lblTotal;
+    private Label lblUpdate;
     @FXML
-    private ComboBox cmboxRoom;
+    private ComboBox<String> cmboxRoom;
     @FXML
-    private ComboBox cmboxOcc;
+    private ComboBox<String> cmboxOcc;    
     @FXML
-    private ComboBox cmboxStyle;
-    @FXML
-    private CheckBox chboxEarly;
-    @FXML
-    private CheckBox chboxBfast;
-    @FXML
-    private Button btnTotal;
+    private Button btnUpdate;
+    
+    private int availableRooms = 50;
+    private int occupants = 0;
     
     //ArrayLists for filling combo boxes
     private ObservableList<String> numList = FXCollections.observableArrayList(
             "1","2","3","4","5");
-    private ObservableList<String> bedList = FXCollections.observableArrayList(
-            "King","Queen", "Double", "Twin");
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cmboxRoom.setItems(numList);
-        cmboxOcc.setItems(numList);
-        cmboxStyle.setItems(bedList);        
+        cmboxOcc.setItems(numList);      
     }    
     
     @FXML
     private void handleButton(ActionEvent event){
-        
+        switch(cmboxRoom.getValue()){
+            case "1":
+                availableRooms -= 1;
+                break;
+            case "2":
+                availableRooms -= 2;
+                break;
+            case "3":
+                availableRooms -= 3;
+                break;
+            case "4":
+                availableRooms -= 4;
+                break;
+            case "5":
+                availableRooms -= 5;
+                break;
+        }
+        switch(cmboxOcc.getValue()){
+            case "1":
+                occupants += 1;
+                break;
+            case "2":
+                occupants += 2;
+                break;
+            case "3":
+                occupants += 3;
+                break;
+            case "4":
+                occupants += 4;
+                break;
+            case "5":
+                occupants += 5;
+                break;
+        }
+        if(availableRooms < 0){
+            lblUpdate.setText("Rooms Available: OverBooked by " 
+                    + Math.abs(availableRooms) + " rooms" +
+                    "\nTotal Occupants: " + occupants);
+        }
+        else{
+            lblUpdate.setText("Rooms Available: " + availableRooms + 
+                    "\nTotal Occupants: " + occupants);
+        }
     }
     
 }
